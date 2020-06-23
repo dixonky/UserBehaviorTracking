@@ -31,8 +31,56 @@
     display: inline-block;
 }
 
+.mousemap-line-container{ 
+    position:absolute; 
+    width:10px; height:10px; 
+    border-radius: 50%;
+    display: inline-block;
+}
+
 .button{
-    width: 100px;
+    bottom:20px;
+    width:100px;
+    height:40px;
+    display: block;
+    float: left;
+    overflow:auto;
+}
+
+#logs-button{
+    position: fixed;
+    bottom:20px;
+    left: 340px;
+    width:100px;
+    height:40px;
+    display: block;
+}
+
+#clicks-button{
+    position: fixed;
+    bottom:20px;
+    left: 230px;
+    width:100px;
+    height:40px;
+    display: block;
+}
+
+#mouse-button{
+    position: fixed;
+    bottom:20px;
+    left: 120px;
+    width:100px;
+    height:40px;
+    display: block;
+}
+
+#heatmap-button{
+    position: fixed;
+    bottom:20px;
+    left: 10px;
+    width:100px;
+    height:40px;
+    display: block;
 }
 
 #heatmap-overlay { 

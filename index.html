@@ -4,132 +4,115 @@
     <meta charset="utf-8">
     <script src="timers.js"></script>
     <script src="keys.js"></script>
-    <script src="gridHeatMap.js"></script>
+    <script src="heatmap.js"></script>
     <link rel="stylesheet" href="style.css">
     <title>Site Statistics</title>
 </head>
 
 <body>
     <script type="text/javascript">
+        //JS setup functions
+        heatmapSetup();
+        
         //Global variables
         var body = document.getElementsByTagName("BODY")[0];
         var startTime, startTimeMilli, elapTime, diffTime, time, secs;
         var mouEntTime, mouLeaTime, mouDiffTime, mouSecs;
-        var values, vpWidth, vpHeight;
         var hoverID, leaveID;
         let eleTimes = new Map();
         let clicks = new Map();
         let mouseMove = new Map();
-    
         
         //
-        var dimCon = document.createElement('div');
-        dimCon.setAttribute("id", "dimensions-container");
-        body.appendChild(dimCon);
-        body.appendChild(document.createElement('br'));
-        var tiStCon = document.createElement('div');
-        tiStCon.setAttribute("id", "time-start-container");
-        body.appendChild(tiStCon);
-        var tiNowCon = document.createElement('div');
-        tiNowCon.setAttribute("id", "time-now-container");
-        tiNowCon.innerHTML = "Current Time: ";
-        body.appendChild(tiNowCon);
-        var tiElCon = document.createElement('div');
-        tiElCon.setAttribute("id", "time-elap-container");
-        tiElCon.innerHTML = "Elapsed Time: ";
-        body.appendChild(tiElCon);
-        body.appendChild(document.createElement('br'));
+        var timeStartCon = document.createElement('div');
+        var timeNowCon = document.createElement('div');
+        var timeElapCon = document.createElement('div');
         var mouCon = document.createElement('div');
+        var clickCon = document.createElement('div');
+        var divClickCon = document.createElement('div');
+        var divHoverCon = document.createElement('div');
+        var keyCon = document.createElement('div');
+        var keyAllCon = document.createElement('div');
+        var logBut = document.createElement('button');
+        var cliBut = document.createElement('button');
+        var mouBut = document.createElement('button');
+        var resTab = document.createElement('table');
+        
+        timeStartCon.setAttribute("id", "time-start-container");
+        timeNowCon.setAttribute("id", "time-now-container");
+        timeNowCon.innerHTML = "Current Time: ";
+        timeElapCon.setAttribute("id", "time-elap-container");
+        timeElapCon.innerHTML = "Elapsed Time: ";
         mouCon.setAttribute("id", "mouse-container");
         mouCon.innerHTML = "Mouse Location: ";
-        body.appendChild(mouCon);
-        var cliCon = document.createElement('div');
-        cliCon.setAttribute("id", "click-container");
-        cliCon.innerHTML = "Click Location: ";
-        body.appendChild(cliCon);
-        body.appendChild(document.createElement('br'));
-        var divCliCon = document.createElement('div');
-        divCliCon.setAttribute("id", "div-click-container");
-        divCliCon.innerHTML = "Element Clicked: ";
-        body.appendChild(divCliCon);
-        var hovCliCon = document.createElement('div');
-        hovCliCon.setAttribute("id", "div-hover-container");
-        hovCliCon.innerHTML = "Element Hovered: ";
-        body.appendChild(hovCliCon);
-        body.appendChild(document.createElement('br'));
-        var keyCon = document.createElement('div');
+        clickCon.setAttribute("id", "click-container");
+        clickCon.innerHTML = "Click Location: ";
+        divClickCon.setAttribute("id", "div-click-container");
+        divClickCon.innerHTML = "Element Clicked: ";
+        divHoverCon.setAttribute("id", "div-hover-container");
+        divHoverCon.innerHTML = "Element Hovered: ";
         keyCon.setAttribute("id", "key-container");
         keyCon.innerHTML = "Last Key Entered: ";
-        body.appendChild(keyCon);
-        var keyAllCon = document.createElement('div');
         keyAllCon.setAttribute("id", "key-all-container");
         keyAllCon.innerHTML = "All Keys Entered: ";
-        body.appendChild(keyAllCon);
-        body.appendChild(document.createElement('br'));
         
-        var colBut = document.createElement('button');
-        colBut.setAttribute("id", "collate-button");
-        colBut.innerHTML = "Logs";
-        body.appendChild(colBut);
-        var cliBut = document.createElement('button');
+        logBut.setAttribute("id", "logs-button");
+        logBut.innerHTML = "Logs";
+        logBut.setAttribute("class", "button");
         cliBut.setAttribute("id", "clicks-button");
         cliBut.innerHTML = "Show Clicks";
-        body.appendChild(cliBut);
-        var mouBut = document.createElement('button');
+        cliBut.setAttribute("class", "button");
         mouBut.setAttribute("id", "mouse-button");
         mouBut.innerHTML = "Track Mouse";
-        body.appendChild(mouBut);
-        var gridBut = document.createElement('button');
-        gridBut.setAttribute("id", "grid-button");
-        gridBut.innerHTML = "Show Heatmap";
-        body.appendChild(gridBut);
-        body.appendChild(document.createElement('br'));
-        body.appendChild(document.createElement('br'));
+        mouBut.setAttribute("class", "button");
         
-        var resTab = document.createElement('table');
         resTab.setAttribute("id", "results-table");
         var row1 = resTab.insertRow(-1);
-        var x = row1.insertCell(0);
-        x.setAttribute("class", "res");
-        x.setAttribute("id", "results-times");
-        var y = row1.insertCell(1);
-        y.setAttribute("class", "res");
-        y.setAttribute("id", "results-clicks");
-        var row2 = resTab.insertRow(0);
-        var x2 = row2.insertCell(0);
-        x.setAttribute("class", "res");
-        x.setAttribute("id", "grid-times");
+        var resTimes = row1.insertCell(0);
+        resTimes.setAttribute("class", "res");
+        resTimes.setAttribute("id", "results-times");
+        var resClicks = row1.insertCell(1);
+        resClicks.setAttribute("class", "res");
+        resClicks.setAttribute("id", "results-clicks");
+        
+        
+        body.appendChild(timeStartCon);
+        body.appendChild(timeNowCon);
+        body.appendChild(timeElapCon);
+        body.appendChild(document.createElement('br'));
+        body.appendChild(mouCon);
+        body.appendChild(clickCon);
+        body.appendChild(document.createElement('br'));
+        body.appendChild(divClickCon);
+        body.appendChild(divHoverCon);
+        body.appendChild(document.createElement('br'));
+        body.appendChild(keyCon);
+        body.appendChild(keyAllCon);
+        body.appendChild(document.createElement('br'));
+        body.appendChild(logBut);
+        body.appendChild(cliBut);
+        body.appendChild(mouBut);
+        body.appendChild(document.createElement('br'));
         body.appendChild(resTab);
         
-        
-        //
-        values = getDimensions();
-        vpWidth = values.width;
-        vpHeight = values.height;
-        var dim = document.getElementById("dimensions-container");
-        dim.innerHTML = ('Viewport: '+vpWidth+'x'+vpHeight);
-
         
         //Time on site functions
         startTime = performance.now();
         startTimeMilli = performance.now();
         time = "Start " + getTime();
-        var sta = document.getElementById("time-start-container");
-        var now = document.getElementById("time-now-container");
-        var ela = document.getElementById("time-elap-container");
-        sta.textContent = time;
+        timeStartCon.textContent = time;
         time = "Current " + getTime();
-        now.textContent = time;
+        timeNowCon.textContent = time;
         setInterval(function() {
             time = "Current " + getTime();
-            now.textContent = time;
+            timeNowCon.textContent = time;
         }, 1000);
         setInterval(function() {
             elapTime = performance.now();
             diffTime = elapTime - startTime;
             diffTime /= 1000;
             secs = Math.round(diffTime);
-            ela.textContent = ("Elapsed Time: " + secs);
+            timeElapCon.textContent = ("Elapsed Time: " + secs);
         }, 1000);
         
         
@@ -139,15 +122,13 @@
                 var loc = (evt.pageX + " " + evt.pageY);
                 var locTime = getTimeClicks();
                 clicks.set(locTime, loc);
-                var con = document.getElementById("click-container");
-                con.textContent = ("Click Location: " + evt.pageX + " " + evt.pageY); 
+                clickCon.textContent = ("Click Location: " + evt.pageX + " " + evt.pageY); 
             });
             node.addEventListener("mouseover", (evt) => {
                 hoverID = evt.target.id;
                 if(hoverID){mouEntTime = performance.now();}
                 if(!hoverID) {hoverID = "None";}
-                var conHov = document.getElementById("div-hover-container");
-                conHov.textContent = ("Element Hovered: " + hoverID);
+                divHoverCon.textContent = ("Element Hovered: " + hoverID);
             });
             node.addEventListener("mouseleave", (evt) => {
                 leaveID = evt.target.id;
@@ -173,58 +154,48 @@
             var loc = (evt.pageX + " " + evt.pageY);
             var locTime = performance.now();
             mouseMove.set(locTime, loc);
-            var conMou = document.getElementById("mouse-container");
-            conMou.textContent = ("Mouse Location: " + evt.pageX + " " + evt.pageY);
+            mouCon.textContent = ("Mouse Location: " + evt.pageX + " " + evt.pageY);
         });
         
         document.addEventListener("click", (evt) => {
             var clickedid = evt.target.id;
             if(!clickedid) {clickedid = "None";}
-            var conCli = document.getElementById("div-click-container");
-            conCli.textContent = ("Element Clicked: " + clickedid);
+            divClickCon.textContent = ("Element Clicked: " + clickedid);
         });
         
         document.addEventListener("keypress", (evt) => {
             var key =  getKey(evt.shiftKey, evt.which);
-            var conKey = document.getElementById("key-container");
-            var conKeyAll = document.getElementById("key-all-container");
             var textnode = document.createTextNode(key);
-            conKey.textContent = ("Last Key Entered: " + key);
-            conKeyAll.appendChild(textnode);
+            keyCon.textContent = ("Last Key Entered: " + key);
+            keyAllCon.appendChild(textnode);
         });
         
         
         //Add events to the buttons
-        var colBut = document.getElementById("collate-button");
-        colBut.addEventListener("click", (evt) => {
-            var colBut = document.getElementById("collate-button");
-            var resTime = document.getElementById("results-times");
-            var resCli = document.getElementById("results-clicks");
-            resTime.innerHTML = '';
+        logBut.addEventListener("click", (evt) => {
+            resTimes.innerHTML = '';
             var textnode = document.createTextNode('Time Spent on Each Element:');
-            resTime.appendChild(textnode);
-            resTime.appendChild(document.createElement('br'));
+            resTimes.appendChild(textnode);
+            resTimes.appendChild(document.createElement('br'));
             let sortedTimes = new Map([...eleTimes].sort());
             for (let [key, value] of sortedTimes.entries()) {
                 var textnode = document.createTextNode("\u00a0\u00a0\u00a0"+key + ' = ' + value.toFixed(3));
-                resTime.appendChild(textnode);
-                resTime.appendChild(document.createElement('br'));
+                resTimes.appendChild(textnode);
+                resTimes.appendChild(document.createElement('br'));
             }
-            resCli.innerHTML = '';
+            resClicks.innerHTML = '';
             var textnode = document.createTextNode('Click Log:');
-            resCli.appendChild(textnode);
-            resCli.appendChild(document.createElement('br'));
+            resClicks.appendChild(textnode);
+            resClicks.appendChild(document.createElement('br'));
             let sortedClicks = new Map([...clicks].sort());
             for (let [key, value] of sortedClicks.entries()) {
                 var textnode = document.createTextNode("\u00a0\u00a0\u00a0"+value +" @ " + key);
-                resCli.appendChild(textnode);
-                resCli.appendChild(document.createElement('br'));
+                resClicks.appendChild(textnode);
+                resClicks.appendChild(document.createElement('br'));
             }
         });
         
-        var cliBut = document.getElementById("clicks-button");
         cliBut.addEventListener("click", (evt) => {
-            var body = document.getElementsByTagName("BODY")[0];
             cliMap = document.createElement('div');
             cliMap.setAttribute("id", "clickmap-overlay");
             body.appendChild(cliMap);
@@ -244,7 +215,6 @@
             }, 5000);
         });
         
-        var mouBut = document.getElementById("mouse-button");
         mouBut.addEventListener("click", (evt) => {
             cliMap = document.createElement('div');
             cliMap.setAttribute("id", "clickmap-overlay");
@@ -277,21 +247,9 @@
             }, 3000 + delayTot);
         });
         
-        var gridBut = document.getElementById("grid-button");
-        gridBut.addEventListener("click", (evt) => {
-           showGridMap(); 
-        });
-            
-        //
-        function dimensions(){
-            values = getDimensions();
-            vpWidth = values.width;
-            vpHeight = values.height;
-            var dim = document.getElementById("dimensions-container");
-            dim.innerHTML = ('Viewport: '+vpWidth+'x'+vpHeight);
-        }
-        body.onresize = function() {dimensions()};
     </script>
  
 </body>
+<footer>
+</footer>
 </html>
