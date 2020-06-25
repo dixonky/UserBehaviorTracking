@@ -1,9 +1,28 @@
-#results-table {
+#time-table {
+    position: absolute; 
+    bottom: 100px;
+    width: auto;
+    height: auto;
+    max-height: 150px;
+    overflow: hidden;
 }
+
+#click-table {
+    position: absolute; 
+    bottom: 100px;
+    width: auto;
+    height: auto;
+    max-height: 150px;
+    overflow: hidden;
+    left: 230px;
+}
+
 .res {
-    vertical-align: text-top;
-    padding-right: 20px;
+    display: inline-block;
+    overflow-y: auto;
+    max-height: 200px;
 }
+
 
 #clickmap-overlay { 
     position:fixed; 
@@ -45,6 +64,15 @@
     display: block;
     float: left;
     overflow:auto;
+}
+
+#click-logs-button{
+    position: fixed;
+    bottom:20px;
+    left: 450px;
+    width:100px;
+    height:40px;
+    display: block;
 }
 
 #logs-button{

@@ -2,7 +2,7 @@ var grid = new Map();
 var gridX, gridY, gridWidth, gridHeight;
 var values, vpWidth, vpHeight;
 var lastTime = performance.now();
-var cellAmount = 75;
+var cellAmount = 100;
 var dimCon = document.createElement('div');
 var gridBut = document.createElement('button');
 
@@ -31,6 +31,10 @@ function heatmapSetup() {
            showGridMap(); 
     });
     document.getElementsByTagName("BODY")[0].appendChild(gridBut);
+    
+    document.addEventListener("mousemove", (evt) => {
+            addTime(evt.pageX, evt.pageY);
+    });
 }
 
 
