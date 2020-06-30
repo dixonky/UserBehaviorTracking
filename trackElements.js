@@ -20,7 +20,7 @@ function trackElementsSetup() {
     divHoverCon.setAttribute("id", "div-hover-container");
     divHoverCon.innerHTML = "Element Hovered: ";
     logBut.setAttribute("id", "logs-button");
-    logBut.innerHTML = "Logs";
+    logBut.innerHTML = "Time Log";
     logBut.setAttribute("class", "button");
 
     resTab.setAttribute("id", "time-table");

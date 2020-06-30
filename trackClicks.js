@@ -15,7 +15,7 @@ function trackClicksSetup() {
     cliBut.innerHTML = "Show Clicks";
     cliBut.setAttribute("class", "button");
     cliLogBut.setAttribute("id", "click-logs-button");
-    cliLogBut.innerHTML = "Click Logs";
+    cliLogBut.innerHTML = "Click Log";
     cliLogBut.setAttribute("class", "button");
 
     cliTab.setAttribute("id", "click-table");

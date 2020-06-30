@@ -23,6 +23,25 @@
     max-height: 200px;
 }
 
+#square {
+    position: fixed;
+    width: 25px;
+    height: 25px;
+    content: "Test";
+    display: block;
+    z-index: 101;
+    border-style: solid;
+}
+
+#loading { 
+    position:fixed; 
+    top:0; left:0; 
+    width:100%; height:100%;  
+    z-index: 100;
+    background-color: hsl(0, 0%, 0%);
+    background: transparent url('images/loading.gif') no-repeat center; 
+}
+
 
 #clickmap-overlay { 
     position:fixed; 
@@ -87,7 +106,7 @@
 #clicks-button{
     position: fixed;
     bottom:20px;
-    left: 230px;
+    left: 560px;
     width:100px;
     height:40px;
     display: block;
@@ -96,7 +115,7 @@
 #mouse-button{
     position: fixed;
     bottom:20px;
-    left: 120px;
+    left: 230px;
     width:100px;
     height:40px;
     display: block;
@@ -106,6 +125,15 @@
     position: fixed;
     bottom:20px;
     left: 10px;
+    width:100px;
+    height:40px;
+    display: block;
+}
+
+#table-button{
+    position: fixed;
+    bottom:20px;
+    left: 120px;
     width:100px;
     height:40px;
     display: block;
@@ -123,4 +151,21 @@
     position:absolute; 
     display: inline-block;
     opacity: 1;
+}
+
+#area-table {
+    position:fixed; 
+    top:0; left:0; 
+    width:100%; height:100%;  
+    border-collapse: collapse;
+    filter:alpha(opacity=70); opacity: 0.70; 
+    overflow:auto;
+}
+
+#area-table td, tr {
+    height: 100px;
+    width: 100px;
+    border: solid;
+    border-bottom-color: black;
+    text-align: center;
 }
